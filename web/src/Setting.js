@@ -34,7 +34,7 @@ export const CountryRegionData = [{name: "Ascension Island", code: "AC"},{name: 
 export function initServerUrl() {
   const hostname = window.location.hostname;
   if (hostname === "localhost") {
-    ServerUrl = `http://${hostname}:8000`;
+    ServerUrl = `http://${hostname}:7000`;
   }
 }
 
@@ -46,7 +46,7 @@ export function isLocalhost() {
 export function getFullServerUrl() {
   let fullServerUrl = window.location.origin;
   if (fullServerUrl === "http://localhost:7001") {
-    fullServerUrl = "http://localhost:8000";
+    fullServerUrl = "http://localhost:7000";
   }
   return fullServerUrl;
 }

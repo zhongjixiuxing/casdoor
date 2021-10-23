@@ -91,6 +91,20 @@ func getTokenByCode(code string) *Token {
 	return nil
 }
 
+func GetTokenByName(name string) *Token {
+	token := Token{}
+	existed, err := adapter.Engine.Where("name=?", name).Get(&token)
+	if err != nil {
+		panic(err)
+	}
+
+	if existed {
+		return &token
+	}
+
+	return nil
+}
+
 func GetToken(id string) *Token {
 	owner, name := util.GetOwnerAndNameFromId(id)
 	return getToken(owner, name)

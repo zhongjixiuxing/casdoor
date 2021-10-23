@@ -317,7 +317,32 @@ func (c *ApiController) Login() {
 			}
 			//resp = &Response{Status: "ok", Msg: "", Data: res}
 		} else { // form.Method != "signup"
-			userId := c.GetSessionUsername()
+			var userId string = c.GetSessionUsername()
+			if userId == "" {
+                if form.Tokenid != "" {
+                     fmt.Println("link by Tokenid: ", form)
+                     token := object.GetTokenByName(form.Tokenid)
+                     if token == nil {
+                         c.ResponseError("Token not found.", form)
+                         return
+                     }
+
+                     if token.Organization != application.Organization {
+                         c.ResponseError("Token & Application organization not match.", form)
+                         return
+                     }
+
+                     bindUser := object.GetUserByField(application.Organization, "name", token.User)
+                     if bindUser == nil {
+                         c.ResponseError("bind lint User not found.", form)
+                         return
+                     }
+
+                     userId = bindUser.Owner + "/" + bindUser.Name
+                     fmt.Println("userId:", userId)
+                }
+			}
+
 			if userId == "" {
 				c.ResponseError("The account does not exist", userInfo)
 				return

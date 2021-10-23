@@ -79,6 +79,7 @@ class AuthCallback extends React.Component {
     const applicationName = innerParams.get("application");
     const providerName = innerParams.get("provider");
     const method = innerParams.get("method");
+    const tokenid = innerParams.get("tokenid");
 
     let redirectUri = `${window.location.origin}/callback`;
 
@@ -91,6 +92,7 @@ class AuthCallback extends React.Component {
       state: applicationName,
       redirectUri: redirectUri,
       method: method,
+      tokenid: tokenid
     };
     const oAuthParams = Util.getOAuthGetParameters(innerParams);
     AuthBackend.login(body, oAuthParams)
@@ -107,7 +109,11 @@ class AuthCallback extends React.Component {
             // Util.showMessage("success", `Authorization code: ${res.data}`);
           } else if (responseType === "link") {
             const from = innerParams.get("from");
-            Setting.goToLinkSoft(this, from);
+            if (innerParams.get("custom_redirect_uri")) {
+              Setting.goToLink(`${innerParams.get("custom_redirect_uri")}?method=link&provider=${providerName}&state=${innerParams.get('state')}`);
+            } else {
+              Setting.goToLinkSoft(this, from);
+            }
           }
         } else {
           this.setState({

@@ -55,6 +55,7 @@ export function getApplicationLogin(oAuthParams) {
 }
 
 export function login(values, oAuthParams) {
+  console.log('values -------------- : ', values)
   return fetch(`${authConfig.serverUrl}/api/login${oAuthParamsToQuery(oAuthParams)}`, {
     method: 'POST',
     credentials: "include",

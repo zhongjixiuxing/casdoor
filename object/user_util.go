@@ -86,6 +86,7 @@ func SetUserField(user *User, field string, value string) bool {
 		panic(err)
 	}
 
+    fmt.Println("SetUserField ============== ", user, field, value, affected)
 	return affected != 0
 }
 

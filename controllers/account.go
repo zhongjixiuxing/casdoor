@@ -40,6 +40,7 @@ type RequestForm struct {
 	Phone        string `json:"phone"`
 	Affiliation  string `json:"affiliation"`
 	Region       string `json:"region"`
+	Tokenid       string `json:"tokenid"`
 
 	Application string `json:"application"`
 	Provider    string `json:"provider"`
